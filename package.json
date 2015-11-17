@@ -1,0 +1,8 @@
+{
+  "name": "tarefas",
+  "main": "index.js",
+  "author":{
+    "name": "Luis Abreu",
+    "email": "labreu@gmail.com"
+  }
+}
