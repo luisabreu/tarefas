@@ -9,5 +9,10 @@ app.get("/", (req, res) =>{
    res.send("<html><body><h1>Olá de express</h1></body></html>")
 });
 
+app.get("/api/users", (req, res) => {
+    res.header("Content-type", "application/json");
+    res.send({name: "Luis", email: "labreu@gmail.com"});
+});
+
 var servidor = http.createServer(app);
 servidor.listen(9001);
