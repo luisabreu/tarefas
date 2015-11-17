@@ -1,9 +1,0 @@
-<!doctype html>
-<html>
-<head>
-    <title>@model.titulo</title>
-</head>
-<body>
-    <div>@html.block("body")</div>
-</body>
-</html>
