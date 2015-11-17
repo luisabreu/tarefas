@@ -1,10 +1,13 @@
 "use strict";
 
-var http = require('http');
+var http = require("http");
+var express = require("express");
 
-var servidor = http.createServer((req, res) => {
-    console.log("Url: " +  req.url);
-    res.write("<html><body>" + req.url + "</body></html>");
-    res.end();
+var app = express();//singleton da nossa app
+
+app.get("/", (req, res) =>{
+   res.send("<html><body><h1>Olá de express</h1></body></html>")
 });
+
+var servidor = http.createServer(app);
 servidor.listen(9001);
