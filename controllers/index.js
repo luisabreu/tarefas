@@ -1,7 +1,7 @@
 "use strict";
 
-var HomeController = require("./homeController");
+let ControladoraHomepage = require("./controladorHomepage");
 
 module.exports.init = function(app){
-    new HomeController().init(app);
+    new ControladoraHomepage().init(app);
 };

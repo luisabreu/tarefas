@@ -1,6 +1,6 @@
 "use strict";
 
-class HomeController{
+class ControladoraHomepage{
     init(app){
         app.get("/", this.index);
     }
@@ -10,4 +10,4 @@ class HomeController{
     }
 }
 
-module.exports = HomeController;
+module.exports = ControladoraHomepage;
