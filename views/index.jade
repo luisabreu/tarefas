@@ -1,4 +1,10 @@
 extends layout
 block conteudo
     h1=titulo
-    p Utiliza motor Jade
+    if erro
+        p oops, ocorreu um erro: #erro
+    else
+        ul
+            each grupo in tarefas
+                li=grupo.categoria
+                    span #{grupo.tarefas ? grupo.tarefas.length : 0}

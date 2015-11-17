@@ -7,3 +7,5 @@ class ServicoDados{
         return dadosIniciais.tarefas;
     }
 }
+
+module.exports = ServicoDados;

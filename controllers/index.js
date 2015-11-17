@@ -1,7 +1,8 @@
 "use strict";
 
-let ControladoraHomepage = require("./controladorHomepage");
+let ControladorHomepage = require("./controladorHomepage");
+let ServicoDados = require('../services');
 
 module.exports.init = function(app){
-    new ControladoraHomepage().init(app);
+    new ControladorHomepage(new ServicoDados()).init(app);
 };
