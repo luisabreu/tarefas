@@ -1,8 +1,11 @@
 {
   "name": "tarefas",
   "main": "index.js",
-  "author":{
+  "author": {
     "name": "Luis Abreu",
     "email": "labreu@gmail.com"
+  },
+  "dependencies": {
+    "express": "^4.13.3"
   }
 }
