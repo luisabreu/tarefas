@@ -10,6 +10,9 @@ var app = express();//singleton da nossa app
 //definicao motor de vista
 app.set("view engine", "jade");
 
+//pastas publicas (scripts, css, etc)
+app.use(express.static(__dirname + "/public"));
+
 
 
 controllers.init(app);
