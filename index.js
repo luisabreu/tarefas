@@ -5,8 +5,12 @@ var express = require("express");
 
 var app = express();//singleton da nossa app
 
+//definicao motor de vista
+app.set("view engine", "jade");
+
 app.get("/", (req, res) =>{
-   res.send("<html><body><h1>Olá de express</h1></body></html>")
+   //res.send("<html><body><h1>Olá de express</h1></body></html>")
+    res.render("index", {titulo: "Olá de Express!"});
 });
 
 app.get("/api/users", (req, res) => {
