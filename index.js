@@ -1,11 +1,16 @@
 "use strict";
 
-var http = require("http");
-var express = require("express");
+let http = require("http");
+let express = require("express");
 
-var controllers = require('./controllers');
+let controllers = require('./controllers');
+let flash = require("connect-flash");
 
-var app = express();//singleton da nossa app
+let app = express();//singleton da nossa app
+
+let bodyParser = require("body-parser");
+let session = require("express-session");
+let cookieParser = require("cookie-parser")
 
 //definicao motor de vista
 app.set("view engine", "jade");
@@ -13,7 +18,14 @@ app.set("view engine", "jade");
 //pastas publicas (scripts, css, etc)
 app.use(express.static(__dirname + "/public"));
 
-
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(cookieParser());
+app.use(session({
+    secret: "teste",
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(flash());
 
 controllers.init(app);
 

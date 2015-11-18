@@ -1,10 +1,16 @@
 extends layout
 block conteudo
     if erro
-        p oops, ocorreu um erro: #erro
-    else
+        p.text-danger oops, ocorreu um erro: #{erro}
+    if tarefas && tarefas.length > 0
+        form.row.form(action="/novaCategoria", method="post")
+            .form-group
+                input.form-control(name="categoria", placeholder="Introduza o nome da categoria", autofocus="autofocus")
+            .form-group.text-right
+                button.btn.btn-primary(type="submit") Criar
         .row
-            .list-group
-                each grupo in tarefas
-                    a.list-group-item.list-group-item-info(href="#")=grupo.categoria
-                        span.badge #{grupo.tarefas ? grupo.tarefas.length : 0}
+                ul.list-group
+                    each grupo in tarefas
+                        li.list-group-item.list-group-item-info
+                            a(href="#")=grupo.categoria
+                            span.badge #{grupo.tarefas ? grupo.tarefas.length : 0}

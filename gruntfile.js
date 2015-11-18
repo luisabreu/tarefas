@@ -2,6 +2,15 @@
 
 module.exports = function(grunt){
     grunt.initConfig({
+        nodemon:{
+            dev:{
+                script:"index.js"
+            }
+        },
+        watch:{
+            files:["controllers/*.js", "domain/*.js"],
+            tasks:["nodemon"]
+        },
         copy:{
             main:{
                 files:[
@@ -39,5 +48,8 @@ module.exports = function(grunt){
     });
 
     grunt.loadNpmTasks("grunt-contrib-copy");
+    grunt.loadNpmTasks("grunt-contrib-watch");
+    grunt.loadNpmTasks("grunt-nodemon");
+
     //grunt.registerTask("default", ["copy"])
 };
