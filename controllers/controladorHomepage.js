@@ -9,7 +9,13 @@ class ControladorHomepage{
     }
     index(req, res){
         //erro podera ser usado no futuro
-        res.render("index", {titulo: "Lista de tarefas", erro: null, tarefas: this.servicoDados.obtemTarefas()});
+        this.servicoDados.obtemTarefas()
+            .then(tarefas => {
+                res.render("index", {titulo: "Lista de tarefas", erro: null, tarefas: tarefas});
+            })
+            .catch(err => {
+                res.render("index", {titulo: "Lista de tarefas", erro: err, tarefas: []});
+            });
     }
 }
 

@@ -13,7 +13,7 @@ class Repositorio{
         }
     }
 
-    tarefas(){
+    obtemTarefas(){
         return theDb.tarefas;
     }
 }
