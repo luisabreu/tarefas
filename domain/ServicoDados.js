@@ -34,6 +34,12 @@ class ServicoDados{
         let tarefas = this.repositorio.obtemTarefas();
         return tarefas.findOne({categoria: nomeCategoria});
     }
+
+    adicionaTarefa(nomeCategoria, tarefa){
+        let tarefas = this.repositorio.obtemTarefas();
+        return tarefas.update({categoria: nomeCategoria}, { $push: {tarefas: tarefa}});
+
+    }
 }
 
 module.exports = ServicoDados;

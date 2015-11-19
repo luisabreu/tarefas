@@ -18,7 +18,12 @@ app.set("view engine", "jade");
 //pastas publicas (scripts, css, etc)
 app.use(express.static(__dirname + "/public"));
 
+//form url enconded
 app.use(bodyParser.urlencoded({extended: false}));
+//json
+app.use(bodyParser.json());
+
+
 app.use(cookieParser());
 app.use(session({
     secret: "teste",

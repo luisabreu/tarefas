@@ -12,5 +12,5 @@ block conteudo
                 ul.list-group
                     each grupo in tarefas
                         li.list-group-item.list-group-item-info
-                            a(href="#")=grupo.categoria
+                            a(href="/tarefas/#{grupo.categoria}")=grupo.categoria
                             span.badge #{grupo.tarefas ? grupo.tarefas.length : 0}
