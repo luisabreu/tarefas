@@ -7,6 +7,7 @@ class ControladorHomepage{
     init(app){
         app.get("/", (req, res) => this.index.call(this, req, res));
         app.post("/novaCategoria", (req, res) => this.novaCategoria.call(this, req, res));
+        app.get("/tarefas/:nomeCategoria", (req, res) => this.tarefas.call(this, req, res));
     }
     index(req, res){
         //erro podera ser usado no futuro
@@ -29,6 +30,10 @@ class ControladorHomepage{
                 req.flash("errorInfo", err);
                 res.redirect("/");
             });
+    }
+    tarefas(req, res){
+        let nomeCategoria = req.params.nomeCategoria;
+        res.render("tarefas", {titulo: "Tarefas de " + nomeCategoria});
     }
 }
 module.exports = ControladorHomepage;
