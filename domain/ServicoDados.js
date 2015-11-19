@@ -29,6 +29,11 @@ class ServicoDados{
             });
 
     }
+
+    obtemTarefasDeCategoria(nomeCategoria){
+        let tarefas = this.repositorio.obtemTarefas();
+        return tarefas.findOne({categoria: nomeCategoria});
+    }
 }
 
 module.exports = ServicoDados;
