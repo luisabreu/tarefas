@@ -41,7 +41,14 @@ module.exports = function(grunt){
                         dest:"public/js/",
                         filter: "isFile",
                         flatten: true
-                    }
+                    },
+                    {
+                        expand: true,
+                        src:["bower_components/angular/angular.min.js","bower_components/angular-bootstrap/ui-bootstrap.min.js"],
+                        dest:"public/js/",
+                        filter: "isFile",
+                        flatten: true
+                    },
                 ]
             }
         }
