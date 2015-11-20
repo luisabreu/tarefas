@@ -24,7 +24,7 @@ class ControladorHomepage{
         let nomeCategoria = req.body.categoria;
         this.servicoDados.insereTarefa(  { categoria: nomeCategoria,tarefas: [] })
             .then(t => {
-                res.redirect("/" + nomeCategoria);
+                res.redirect("/tarefas/" + nomeCategoria);
             })
             .catch(err =>{
                 req.flash("errorInfo", err);

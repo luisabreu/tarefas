@@ -44,11 +44,12 @@ module.exports = function(grunt){
                     },
                     {
                         expand: true,
-                        src:["bower_components/angular/angular.min.js","bower_components/angular-bootstrap/ui-bootstrap.min.js"],
+                        src:["bower_components/angular/angular.min.js",
+                             "bower_components/angular-resource/angular-resource.min.js"],
                         dest:"public/js/",
                         filter: "isFile",
                         flatten: true
-                    },
+                    }
                 ]
             }
         }

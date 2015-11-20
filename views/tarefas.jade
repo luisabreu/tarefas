@@ -1,4 +1,37 @@
 extends layout
 block conteudo
-    div
-        a.btn.btn-info(href="/") Voltar
+    div(data-ng-app="tarefasApp")
+        div
+            a(href="/") Voltar lista principal
+
+        div.ng-cloak(data-ng-controller="tarefasController")
+            p.text-center.text-danger(data-ng-if="erro !==null") Ocorreu um erro:
+                span {{erro}}
+            form.form.css-form(name="formNovaTarefa", novalidate="novalidate", data-ng-submit="adiciona(formNovaTarefa.$valid)")
+                .form-group()
+                    input.form-control(name="descricao",
+                    placeholder="Introduza a descrição da tarefa",
+                    autofocus="autofocus",
+                    data-ng-model="novaTarefa.descricao",
+                    required="required",
+                    data-ng-class="{'show-error' : submitted}")
+                .form-group.text-right
+                    button.btn.btn-primary(type="submit") Criar
+            table.table.table-striped(data-ng-if="erro ===null && tarefas !== null && tarefas.length > 0")
+                thead
+                    tr
+                        td Descrição
+                        td Autor
+                        td
+                tbody
+                    tr(ng-repeat="t in tarefas")
+                        td {{t.descricao}}
+                        td {{t.autor}}
+                        td
+                            a(href="", data-ng-click="elimina(t)")
+                                span.glyphicon.glyphicon-trash
+            p.text-center.text-danger(data-ng-if="erro ===null && (tarefas === null || tarefas.length === 0)") Não existem registos
+
+
+block scripts
+    script(src="/js/controllers/tarefasApp.js")

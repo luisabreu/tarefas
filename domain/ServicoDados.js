@@ -2,6 +2,7 @@
 
 let dadosIniciais = require('./dadosIniciais');
 
+
 class ServicoDados{
     constructor(repositorio) {
         this.repositorio = repositorio;
@@ -39,6 +40,11 @@ class ServicoDados{
         let tarefas = this.repositorio.obtemTarefas();
         return tarefas.update({categoria: nomeCategoria}, { $push: {tarefas: tarefa}});
 
+    }
+
+    eliminaTarefa(nomeCategoria, tarefa){
+        let tarefas = this.repositorio.obtemTarefas();
+        return tarefas.update({categoria: nomeCategoria}, { $pull: { tarefas: { descricao: tarefa.descricao } } });
     }
 }
 

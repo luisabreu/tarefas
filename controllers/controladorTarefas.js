@@ -1,5 +1,7 @@
 "use strict";
 
+let qs = require("querystring");
+
 class ControladorTarefas{
     constructor(servicoDados){
         this.servicoDados = servicoDados;
@@ -7,10 +9,11 @@ class ControladorTarefas{
     init(app){
         app.get("/api/tarefas/:nomeCategoria", (req, res) => this.obtemTarefasDeCategoria.call(this, req, res));
         app.post("/api/tarefas/:nomeCategoria", (req, res) => this.insereTarefa.call(this, req, res));
+        app.delete("/api/tarefas/:nomeCategoria", (req, res) => this.eliminaTarefa.call(this, req, res));
     }
 
     obtemTarefasDeCategoria(req, res){
-        let categoria = req.params.nomeCategoria;
+        let categoria = qs.unescape(req.params.nomeCategoria);
         this.servicoDados.obtemTarefasDeCategoria(categoria)
             .then(tarefas => {
                 res.set("Content-Type", "application/json");
@@ -22,7 +25,7 @@ class ControladorTarefas{
 
     }
     insereTarefa(req, res){
-        let categoria = req.params.nomeCategoria;
+        let categoria = qs.unescape(req.params.nomeCategoria);
         let tarefa = {
             descricao: req.body.descricaoTarefa,
             autor: 'Luis Abreu'
@@ -35,6 +38,20 @@ class ControladorTarefas{
             .catch(err => {
                 res.staus(400).send("Erro ao adicionar tarefa: " + err);
             });
+    }
+
+    eliminaTarefa(req, res){
+        let categoria = qs.unescape(req.params.nomeCategoria);
+        let tarefa = {descricao: req.query.descricao};
+        this.servicoDados.eliminaTarefa(categoria, tarefa)
+            .then((tarefaAtualizada) => {
+                this.servicoDados.obtemTarefasDeCategoria(categoria)
+                    .then(tarefas => {
+                        res.set({"Content-Type": "application/json"});
+                        res.status(201).send(tarefas);
+                    });
+            })
+        .catch(err => res.staus(400).send("Erro ao adicionar tarefa: " + err));
     }
 }
 
