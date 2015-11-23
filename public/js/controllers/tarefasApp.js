@@ -1,8 +1,8 @@
 (function(angular){
     "use strict";
 
-    angular.module("tarefasApp", ["ngResource"])
-           .controller("tarefasController",
+    let theModule = angular.module("tarefasApp", ["ngResource"]);
+    theModule.controller("tarefasController",
         ["$scope", "$window", "$resource",
             ($scope, $window, $resource)=>{
                 $scope.tarefas = [];
