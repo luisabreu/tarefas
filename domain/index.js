@@ -1,11 +1,13 @@
 "use strict";
 
 
-let servico = require("./servicodados");
+let servicoTarefas = require("./ServicoTarefas");
+let servicoUtilizadores = require("./servicoutilizadores");
 let repositorio = require("./repositorio");
 
 
 module.exports = {
-    ServicoDados: servico,
+    ServicoTarefas: servicoTarefas,
+    ServicoUtilizadores:servicoUtilizadores,
     Repositorio: repositorio
 };

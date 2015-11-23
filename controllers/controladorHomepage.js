@@ -14,7 +14,7 @@ class ControladorHomepage{
         this.servicoDados.obtemTarefas()
             .then(tarefas => {
                 let erro =req.flash("errorInfo")[0];
-                res.render("index", {titulo: "Lista de tarefas", erro: erro, tarefas: tarefas});
+                res.render("index", {titulo: "Lista de tarefas", erro: erro, tarefas: tarefas, utilizador: req.user});
             })
             .catch(err => {
                 res.render("index", {titulo: "Lista de tarefas", erro: err, tarefas: []});
@@ -33,7 +33,7 @@ class ControladorHomepage{
     }
     tarefas(req, res){
         let nomeCategoria = req.params.nomeCategoria;
-        res.render("tarefas", {titulo: "Tarefas de " + nomeCategoria});
+        res.render("tarefas", {titulo: "Tarefas de " + nomeCategoria, utilizador: req.user});
     }
 }
 module.exports = ControladorHomepage;

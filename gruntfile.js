@@ -45,6 +45,8 @@ module.exports = function(grunt){
                     {
                         expand: true,
                         src:["bower_components/angular/angular.min.js",
+                            "bower_components/angular/angular.js",
+                             "bower_components/angular-resource/angular-resource.js",
                              "bower_components/angular-resource/angular-resource.min.js"],
                         dest:"public/js/",
                         filter: "isFile",

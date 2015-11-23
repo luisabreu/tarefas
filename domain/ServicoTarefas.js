@@ -3,7 +3,7 @@
 let dadosIniciais = require('./dadosIniciais');
 
 
-class ServicoDados{
+class ServicoTarefas{
     constructor(repositorio) {
         this.repositorio = repositorio;
     }
@@ -48,4 +48,4 @@ class ServicoDados{
     }
 }
 
-module.exports = ServicoDados;
+module.exports = ServicoTarefas;

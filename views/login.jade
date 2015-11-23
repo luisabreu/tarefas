@@ -1,0 +1,13 @@
+extends layout
+block conteudo
+    if erro
+        p.text-danger oops, ocorreu um erro: #{erro}
+    form.form(action="/login", method="post")
+        .form-group
+            label Nome de utilizador:
+            input.form-control(placeholder="Introduza o seu nome", name="username", autofocus="autofocus")
+        .form-group
+            label Palavra chave:
+            input.form-control(placeholder="Introduza a palavra-chave", type="password", name="password")
+        .form-group
+            button.btn.btn-primary Confirmar

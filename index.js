@@ -10,7 +10,8 @@ let app = express();//singleton da nossa app
 
 let bodyParser = require("body-parser");
 let session = require("express-session");
-let cookieParser = require("cookie-parser")
+let cookieParser = require("cookie-parser");
+
 
 //definicao motor de vista
 app.set("view engine", "jade");
@@ -31,6 +32,7 @@ app.use(session({
     saveUninitialized: false
 }));
 app.use(flash());
+
 
 controllers.init(app);
 

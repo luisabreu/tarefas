@@ -1,0 +1,23 @@
+extends layout
+block conteudo
+    if erro
+        p.text-danger oops, ocorreu um erro: #{erro}
+    form.form(action="/registar", method="post")
+        .form-group
+            label Nome:
+            input.form-control(placeholder="Introduza o seu nome", name="nome", autofocus="autofocus")
+        .form-group
+            label Nome de utilizador:
+            input.form-control(placeholder="Introduza o seu nome de utilizador", name="username")
+        .form-group
+            label Email:
+            input.form-control(placeholder="Introduza o seu email", name="email")
+        .form-group
+            label Palavra chave:
+            input.form-control(placeholder="Introduza a palavra-chave", type="password", name="password")
+        .form-group
+            button.btn.btn-primary Confirmar
+        .form-group
+            Se já possui conta, então efetue
+            a(href="/login")  login
+            na aplicação
