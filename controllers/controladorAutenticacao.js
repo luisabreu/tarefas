@@ -1,80 +1,18 @@
 "use strict";
 
-let crypto = require("crypto");
-let credential = require("credential");
-
-
-let passport = require("passport");
-let authLocal = require("passport-local");
-
-function geraPassword(password){
-    return new Promise((resolve, reject) => {
-        credential.hash(password, (err, hash) => {
-            if(err){
-                reject(err);
-                return;
-            }
-            resolve(hash);
-        });
-    });
-}
-
-function verificaPassword(password, dadosPalavraChave){
-    return new Promise((resolve, reject) => {
-        credential.verify(dadosPalavraChave, password, (err, passValida) => {
-            if(err){
-                reject(err);
-                return;
-            }
-            resolve(passValida);
-        });
-    });
-}
-
 class ControladorAutenticacao{
-    constructor(servicoUtilizadores){
+    constructor(servicoUtilizadores, gestorAutenticacao){
         this.servicoUtilizadores = servicoUtilizadores;
+        this.gestorAutenticacao = gestorAutenticacao;
     }
 
     init(app){
-
-        passport.use(new authLocal.Strategy((username, password, done) => {
-            this.servicoUtilizadores.obtemUtilizador(username)
-                .then(utilizador => {
-                    if(!utilizador){
-                        done(null, false, {erro: "Credenciais inválidas." });
-                    }
-                    return verificaPassword(password, utilizador.dadosPalavraChave)
-                        .then(passValida => done(null, passValida ? utilizador : {erro: "Credenciais inválidas"}));
-                })
-                .catch(err => {
-                    done(err);
-                });
-        }));
-
-        passport.serializeUser((user, next) => next(null, user.username));
-        passport.deserializeUser((key, next) => {
-            this.servicoUtilizadores.obtemUtilizador(key)
-                .then(utilizador => {
-                    if(!utilizador){
-                        next(null, false, {erro : "Credenciais inválidas."});
-                        return;
-                    }
-                    next(null, utilizador);
-                })
-                .catch((err) => {
-                    next(err);
-                });
-        });
-        app.use(passport.initialize());
-        app.use(passport.session());
-
+        this.gestorAutenticacao.init(app);
         app.get("/registar", (req, res) => this.registar.call(this, req, res));
         app.post("/registar", (req, res) => this.novoUtilizador.call(this, req, res));
 
         app.get("/login", (req, res) => this.login.call(this, req, res));
         app.post("/login", (req, res, next) => this.verificaCredenciais.call(this, req, res, next));
-
     }
 
     registar(req, res){
@@ -89,7 +27,7 @@ class ControladorAutenticacao{
             email: req.body.email
         };
 
-        geraPassword(req.body.password).then( dadosPass => {
+        this.gestorAutenticacao.geraPassword(req.body.password).then( dadosPass => {
                 utilizador.dadosPalavraChave = dadosPass;
                 return this.servicoUtilizadores.adicionaUtilizador(utilizador)
                     .then(() => {
@@ -107,23 +45,20 @@ class ControladorAutenticacao{
     }
 
     verificaCredenciais(req, res, next){
-        let authFunction = passport.authenticate("local", (err, user, info) => {
-            if(err){
-                next(err);
-                return;
-            }
-            req.logIn(user, (err) =>{
-                if(err){
-                    next(err);
-                }
-                else{
+        this.gestorAutenticacao.verificaCredenciais(req, res, next)
+            .then(() => {
+                req.logIn(user, (err) => {
+                    if (err) {
+                        throw err;
+                    }
                     res.redirect("/");
-                }
+                });
+            })
+            .catch((err ) => {
+                req.flash("erroVerificacaoCredenciais", err.message);
+                res.redirect("/login");
             });
-        });
-        authFunction(req, res, next);
     }
-
 }
 
 module.exports = ControladorAutenticacao;
