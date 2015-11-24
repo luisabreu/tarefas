@@ -32,7 +32,10 @@ class GestorAutenticacao{
                     }
                     return verificaPassword(password, utilizador.dadosPalavraChave)
                         .then(passValida => {
-                            done(null, false, passValida ? utilizador : {message: "Credenciais inválidas"});
+                            if(passValida){
+                                return done(null, utilizador);
+                            }
+                            return done(null, false, {message: "Credenciais inválidas"});
                         })
                         .catch(err => done(err));
                 })
@@ -84,6 +87,24 @@ class GestorAutenticacao{
             });
             authFunction(req, res, next);
         });
+    }
+
+    static estaAutenticadoHttp(req, res, next){
+        if(req.isAuthenticated()){
+            next();
+        }
+        else{
+            res.redirect("/login");
+        }
+    }
+
+    static estaAutenticadoWebApi(req, res, next){
+        if(req.isAuthenticated()){
+            next();
+        }
+        else{
+            res.send(401, "Not authorized");
+        }
     }
 }
 

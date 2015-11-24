@@ -1,5 +1,7 @@
 "use strict";
 
+let GestorAutenticacao = require("../authentication");
+
 class ControladorAutenticacao{
     constructor(servicoUtilizadores, gestorAutenticacao){
         this.servicoUtilizadores = servicoUtilizadores;
@@ -8,8 +10,8 @@ class ControladorAutenticacao{
 
     init(app){
         this.gestorAutenticacao.init(app);
-        app.get("/registar", (req, res) => this.registar.call(this, req, res));
-        app.post("/registar", (req, res) => this.novoUtilizador.call(this, req, res));
+        app.get("/registar", GestorAutenticacao.estaAutenticadoHttp, (req, res) => this.registar.call(this, req, res));
+        app.post("/registar", GestorAutenticacao.estaAutenticadoHttp, (req, res) => this.novoUtilizador.call(this, req, res));
 
         app.get("/login", (req, res) => this.login.call(this, req, res));
         app.post("/login", (req, res, next) => this.verificaCredenciais.call(this, req, res, next));
@@ -46,10 +48,10 @@ class ControladorAutenticacao{
 
     verificaCredenciais(req, res, next){
         this.gestorAutenticacao.verificaCredenciais(req, res, next)
-            .then(() => {
-                req.logIn(user, (err) => {
-                    if (err) {
-                        throw err;
+                            .then(user => {
+                                req.logIn(user, (err) => {
+                                    if (err) {
+                                        throw err;
                     }
                     res.redirect("/");
                 });

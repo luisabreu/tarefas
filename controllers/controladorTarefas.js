@@ -1,15 +1,16 @@
 "use strict";
 
 let qs = require("querystring");
+let GestorAutenticacao = require("../authentication");
 
 class ControladorTarefas{
     constructor(servicoDados){
         this.servicoDados = servicoDados;
     }
     init(app){
-        app.get("/api/tarefas/:nomeCategoria", (req, res) => this.obtemTarefasDeCategoria.call(this, req, res));
-        app.post("/api/tarefas/:nomeCategoria", (req, res) => this.insereTarefa.call(this, req, res));
-        app.delete("/api/tarefas/:nomeCategoria", (req, res) => this.eliminaTarefa.call(this, req, res));
+        app.get("/api/tarefas/:nomeCategoria", GestorAutenticacao.estaAutenticadoWebApi, (req, res) => this.obtemTarefasDeCategoria.call(this, req, res));
+        app.post("/api/tarefas/:nomeCategoria", GestorAutenticacao.estaAutenticadoWebApi, (req, res) => this.insereTarefa.call(this, req, res));
+        app.delete("/api/tarefas/:nomeCategoria", GestorAutenticacao.estaAutenticadoWebApi, (req, res) => this.eliminaTarefa.call(this, req, res));
     }
 
     obtemTarefasDeCategoria(req, res){
@@ -28,7 +29,7 @@ class ControladorTarefas{
         let categoria = qs.unescape(req.params.nomeCategoria);
         let tarefa = {
             descricao: req.body.descricaoTarefa,
-            autor: 'Luis Abreu'
+            autor: req.user.nome
         };
         this.servicoDados.adicionaTarefa(categoria,tarefa)
             .then(() => {

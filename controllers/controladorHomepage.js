@@ -1,13 +1,15 @@
 "use strict";
 
+let GestorAutenticacao = require("../authentication");
+
 class ControladorHomepage{
     constructor(servicoDados){
         this.servicoDados = servicoDados;
     }
     init(app){
-        app.get("/", (req, res) => this.index.call(this, req, res));
-        app.post("/novaCategoria", (req, res) => this.novaCategoria.call(this, req, res));
-        app.get("/tarefas/:nomeCategoria", (req, res) => this.tarefas.call(this, req, res));
+        app.get("/",  GestorAutenticacao.estaAutenticadoHttp, (req, res) => this.index.call(this, req, res));
+        app.post("/novaCategoria", GestorAutenticacao.estaAutenticadoHttp, (req, res) => this.novaCategoria.call(this, req, res));
+        app.get("/tarefas/:nomeCategoria", GestorAutenticacao.estaAutenticadoHttp, (req, res) => this.tarefas.call(this, req, res));
     }
     index(req, res){
         //erro podera ser usado no futuro
