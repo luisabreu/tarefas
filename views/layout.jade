@@ -25,7 +25,7 @@ html
                             a(href="/registar") Novo utilizador
                         li.nav
                             if utilizador
-                                a.text-info(href="#") Olá, #{utilizador.nome}
+                                a.text-info(href="/logout") Olá, #{utilizador.nome}
                             else
                                 a(href="/login") Login
         section#body.container

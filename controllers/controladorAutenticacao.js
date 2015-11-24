@@ -15,6 +15,13 @@ class ControladorAutenticacao{
 
         app.get("/login", (req, res) => this.login.call(this, req, res));
         app.post("/login", (req, res, next) => this.verificaCredenciais.call(this, req, res, next));
+
+        app.get("/logout", (req, res) => this.logout.call(this, req, res));
+    }
+
+    logout(req, res){
+        req.logout();
+        res.redirect("/login");
     }
 
     registar(req, res){
